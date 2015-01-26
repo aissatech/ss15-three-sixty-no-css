@@ -4,6 +4,7 @@ export default DS.Model.extend({
   opponent: DS.attr('string', { defaultValue: '' }),
   createdAt: DS.attr('number', { defaultValue: function() { return moment().utc() } }),
   turn: DS.attr('string', { defaultValue: '' }),
+  winner: DS.attr('string', { defaultValue: '' }),
   lastTurnSwitch: DS.attr('number', { defaultValue: function() { return moment().utc() } }),
   // Board Configuration
   // Creator is the ID, aka the HOST

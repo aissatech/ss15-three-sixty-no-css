@@ -44,7 +44,12 @@ export default Ember.View.extend({
   onHpChange: function (controller, key) {
     var cardThatWasAttacked = 'board' + key.slice(2);
     Ember.Logger.info('Received Attack:', cardThatWasAttacked);
-    util.cardSetHp(cardThatWasAttacked,  this.get('controller.' + key), this.get('controller.isOpponent') ? 'creator' : 'opponent');
+    var val = this.get('controller.' + key);
+    if (val === 0) {
+      util.destroyCard(cardThatWasAttacked)
+    } else {
+      util.cardSetHp(cardThatWasAttacked,  this.get('controller.' + key), this.get('controller.isOpponent') ? 'creator' : 'opponent');
+    }
   },
 
   onBoardChange: function(controller, key) {
@@ -276,7 +281,9 @@ export default Ember.View.extend({
               self.get('controller').send('setHP', spotHpKey, currentHp)
 
               util.cardSetHp(spot, currentHp, self.get('controller.isOpponent') ? 'creator' : 'opponent');
-
+              if (currentHp) {
+                util.destroyCard(spot);
+              }
               util.stopAttackSelectionMode();
               util.stopAllOppositeCardsAttackable();
               self.get('controller').send('endTurn')

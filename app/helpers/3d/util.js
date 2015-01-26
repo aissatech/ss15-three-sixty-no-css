@@ -254,12 +254,15 @@ export default {
     Ember.Logger.info('Removing Card', spot);
     var sourceObject = scene.getObjectByName(spot);
 
-    new TWEEN.Tween(sourceObject.position)
+    if (sourceObject) {
+     new TWEEN.Tween(sourceObject.position)
       .to({x: 200, y: 200, rotation: 0}, 3000)
       .easing(TWEEN.Easing.Elastic.InOut)
       .onComplete(function (params) {
         scene.remove(sourceObject);
       }).start();
+
+    }
   },
   cardAttackSelectionMode : function (selectedCardId) {
     //stop last selected card
